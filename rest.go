@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/addodelgrossi/bitmex-api/swagger"
@@ -256,6 +257,25 @@ func (b *BitMEX) GetOrders(symbol string) (orders []swagger.Order, err error) {
 	return
 }
 
+func (b *BitMEX) GetSideOrders(symbol string, side string, columns []string, count float32) (orders []swagger.Order, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["filter"] = fmt.Sprintf(`{"open":true, "side": "%s"}`, side)
+	params["columns"] = strings.Join(columns, ",")
+	params["count"] = count
+
+	orders, response, err = b.client.OrderApi.OrderGetOrders(b.ctx, params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	//body, _ := ioutil.ReadAll(response.Body)
+	//log.Printf("%v", string(body))
+	return
+}
+
 func (b *BitMEX) GetOrdersRaw(symbol string, filter string) (orders []swagger.Order, err error) {
 	var response *http.Response
 
@@ -277,7 +297,7 @@ func (b *BitMEX) GetOrdersRaw(symbol string, filter string) (orders []swagger.Or
 	return
 }
 
-func (b *BitMEX) NewOrder(side string, ordType string, price float64, orderQty int32, postOnly bool, timeInForce string, symbol string) (order swagger.Order, err error) {
+func (b *BitMEX) NewOrder(side string, ordType string, price float64, orderQty float32, postOnly bool, timeInForce string, symbol string) (order swagger.Order, err error) {
 	var response *http.Response
 
 	params := map[string]interface{}{}
@@ -285,7 +305,8 @@ func (b *BitMEX) NewOrder(side string, ordType string, price float64, orderQty i
 	// params["clOrdID"] = ""	// 客户端委托ID
 	params["side"] = side
 	params["ordType"] = ordType
-	params["orderQty"] = float32(orderQty)
+	// params["orderQty"] = float32(orderQty)
+	params["orderQty"] = orderQty
 	if price > 0.0 {
 		params["price"] = price // Limit order only
 	}
@@ -523,6 +544,22 @@ func (b *BitMEX) CancelAllOrders(symbol string) (orders []swagger.Order, err err
 
 	params := map[string]interface{}{}
 	params["symbol"] = symbol
+	params["text"] = "cancel order with bitmex api"
+
+	orders, response, err = b.client.OrderApi.OrderCancelAll(b.ctx, params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
+func (b *BitMEX) CancelSideOrders(symbol string, side string) (orders []swagger.Order, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["filter"] = fmt.Sprintf("{\"side\": \"%s\"}", side)
 	params["text"] = "cancel order with bitmex api"
 
 	orders, response, err = b.client.OrderApi.OrderCancelAll(b.ctx, params)

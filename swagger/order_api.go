@@ -12,12 +12,13 @@ package swagger
 
 import (
 	"encoding/json"
-	"golang.org/x/net/context"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -927,7 +928,7 @@ func (a *OrderApiService) OrderGetOrders(ctx context.Context, localVarOptionals 
 		return successPayload, localVarHttpResponse, reportError("%v localVarOptionalsJson=%v Text=%v",
 			localVarHttpResponse.Status,
 			string(localVarOptionalsJson),
-			string(bodyBytes),
+		string(bodyBytes),
 			)
 	}
 
@@ -1130,7 +1131,7 @@ func (a *OrderApiService) OrderNew(ctx context.Context, symbol string, localVarO
 		return successPayload, localVarHttpResponse, reportError("%v localVarOptionals=%v Text=%v",
 			localVarHttpResponse.Status,
 			string(localVarOptionalsJson),
-			string(bodyBytes),
+		string(bodyBytes),
 			)
 	}
 

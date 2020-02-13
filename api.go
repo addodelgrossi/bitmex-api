@@ -1,19 +1,24 @@
 package bitmex
 
 import (
+	"bytes"
 	"context"
-	"github.com/addodelgrossi/bitmex-api/recws"
-	"github.com/chuckpreslar/emission"
-	"golang.org/x/net/proxy"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
 	"time"
 
+	"github.com/addodelgrossi/bitmex-api/recws"
+	"github.com/chuckpreslar/emission"
+	"golang.org/x/net/proxy"
+
 	//"github.com/mariuspass/recws"
-	"github.com/addodelgrossi/bitmex-api/swagger"
 	"net/http"
 	"net/url"
 	"sync"
+
+	"github.com/addodelgrossi/bitmex-api/swagger"
 )
 
 const (
@@ -52,6 +57,33 @@ type BitMEX struct {
 	orderBookLoaded map[string]bool            // key: symbol
 }
 
+// This type implements the http.RoundTripper interface
+type LoggingRoundTripper struct {
+	Proxied http.RoundTripper
+}
+
+func (lrt LoggingRoundTripper) RoundTrip(req *http.Request) (res *http.Response, e error) {
+	// Do "before sending requests" actions here.
+	fmt.Printf("Sending request to %v\n", req.URL)
+
+	// Send the request, get the response (or the error)
+	res, e = lrt.Proxied.RoundTrip(req)
+
+	// Handle the result.
+	if e != nil {
+		fmt.Printf("Error: %v", e)
+	} else {
+
+		body, err := ioutil.ReadAll(res.Body)
+		if err == nil {
+			res.Body = ioutil.NopCloser(bytes.NewReader(body))
+		}
+		fmt.Printf("Received %v response, body %s\n", res.Status, body)
+	}
+
+	return
+}
+
 // New allows the use of the public or private and websocket api
 func New(host string, key string, secret string) *BitMEX {
 	b := &BitMEX{}
@@ -69,7 +101,8 @@ func New(host string, key string, secret string) *BitMEX {
 	b.timeout = 10 * time.Second
 	b.cfg = GetConfiguration(b.ctx)
 	b.httpClient = &http.Client{
-		Timeout: b.timeout,
+		Timeout:   b.timeout,
+		Transport: LoggingRoundTripper{http.DefaultTransport},
 	}
 	b.cfg.HTTPClient = b.httpClient
 	b.client = swagger.NewAPIClient(b.cfg)
