@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/frankrap/bitmex-api/swagger"
 	"io/ioutil"
 	"net/http"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/frankrap/bitmex-api/swagger"
 )
 
 const (
@@ -308,6 +309,16 @@ func (b *BitMEX) NewOrder(side string, ordType string, price float64, orderQty i
 	}
 	b.onResponse(response)
 	return
+}
+
+func (b *BitMEX) NewOrderBulk(params map[string]interface{}) (orders []swagger.Order, err error) {
+	var response *http.Response
+	orders, response, err = b.client.OrderApi.OrderNewBulk(b.ctx, params)
+	if err != nil {
+		return orders, err
+	}
+	b.onResponse(response)
+	return orders, nil
 }
 
 // PlaceOrder 放置委托单
