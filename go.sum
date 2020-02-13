@@ -30,6 +30,9 @@ github.com/Shopify/sarama v1.22.0/go.mod h1:lm3THZ8reqBDBQKQyb5HB3sY1lKp3grEbQ81
 github.com/Shopify/toxiproxy v2.1.4+incompatible/go.mod h1:OXgGpZ6Cli1/URJOF1DMxUHB2q5Ap20/P/eIdh4G0pI=
 github.com/Workiva/go-datastructures v1.0.50 h1:slDmfW6KCHcC7U+LP3DDBbm4fqTwZGn1beOFPfGaLvo=
 github.com/Workiva/go-datastructures v1.0.50/go.mod h1:Z+F2Rca0qCsVYDS8z7bAGm8f3UkzuWYS/oBZz5a7VVA=
+github.com/frankrap/goalgo v0.0.0-20190419095323-731db66cac6e h1:7cq2YdUOt2T2nxCB653ddlpJf5Qs0rwCAmi/JD61nAw=
+github.com/frankrap/goalgo v0.0.0-20190419095323-731db66cac6e/go.mod h1:3wXq8wtlH2x9WKKVOsU986OgJkWp5+MrfDwya8w5KJw=
+github.com/frankrap/goalgo v0.0.0-20191222082958-86150f79a9c1/go.mod h1:pJdPSl0e2jgAlcWLWNvIEl/Y5OBF7khAqycENDdpvUc=
 github.com/akamai/AkamaiOPEN-edgegrid-golang v0.9.0/go.mod h1:zpDJeKyp9ScW4NNrbdr+Eyxvry3ilGPewKoXw3XGN1k=
 github.com/alcortesm/tgz v0.0.0-20161220082320-9c5fe88206d7/go.mod h1:6zEj6s6u/ghQa61ZWa/C2Aw3RkjiTBOix7dkqa1VLIs=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=
@@ -93,8 +96,6 @@ github.com/facebookgo/structtag v0.0.0-20150214074306-217e25fb9691/go.mod h1:sKL
 github.com/fatih/structs v1.1.0/go.mod h1:9NiDSp5zOcgEDl+j00MP/WkGVPOlPRLejGD8Ga6PJ7M=
 github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568/go.mod h1:xEzjJPgXI435gkrCt3MPfRiAkVrwSbHsst4LCFVfpJc=
 github.com/forestgiant/sliceutil v0.0.0-20160425183142-94783f95db6c/go.mod h1:pFdJbAhRf7rh6YYMUdIQGyzne6zYL1tCUW8QV2B3UfY=
-github.com/frankrap/goalgo v0.0.0-20190419095323-731db66cac6e h1:7cq2YdUOt2T2nxCB653ddlpJf5Qs0rwCAmi/JD61nAw=
-github.com/frankrap/goalgo v0.0.0-20190419095323-731db66cac6e/go.mod h1:3wXq8wtlH2x9WKKVOsU986OgJkWp5+MrfDwya8w5KJw=
 github.com/frankrap/goalgo v0.0.0-20191222082958-86150f79a9c1/go.mod h1:pJdPSl0e2jgAlcWLWNvIEl/Y5OBF7khAqycENDdpvUc=
 github.com/fsnotify/fsnotify v1.4.7 h1:IXs+QLmnXW2CcXuY+8Mzv/fWEsPGWxqefPtCP5CnV9I=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=

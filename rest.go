@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/frankrap/bitmex-api/swagger"
+	"github.com/addodelgrossi/bitmex-api/swagger"
 )
 
 const (

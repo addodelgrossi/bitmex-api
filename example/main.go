@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/frankrap/bitmex-api"
-	"github.com/frankrap/bitmex-api/swagger"
+	"github.com/addodelgrossi/bitmex-api"
+	"github.com/addodelgrossi/bitmex-api/swagger"
 	"log"
 )
 

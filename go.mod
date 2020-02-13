@@ -1,4 +1,4 @@
-module github.com/frankrap/bitmex-api
+module github.com/addodelgrossi/bitmex-api
 
 require (
 	github.com/DataDog/zstd v1.4.0 // indirect
