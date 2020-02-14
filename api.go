@@ -64,21 +64,23 @@ type LoggingRoundTripper struct {
 
 func (lrt LoggingRoundTripper) RoundTrip(req *http.Request) (res *http.Response, e error) {
 	// Do "before sending requests" actions here.
-	fmt.Printf("Sending request to %v\n", req.URL)
+	// fmt.Printf("sending request to %v\n", req.URL)
 
 	// Send the request, get the response (or the error)
 	res, e = lrt.Proxied.RoundTrip(req)
 
 	// Handle the result.
 	if e != nil {
-		fmt.Printf("Error: %v", e)
+		fmt.Printf("error: %v", e)
 	} else {
-
-		body, err := ioutil.ReadAll(res.Body)
-		if err == nil {
-			res.Body = ioutil.NopCloser(bytes.NewReader(body))
+		if res.StatusCode >= 300{
+			body, err := ioutil.ReadAll(res.Body)
+			if err == nil {
+				res.Body = ioutil.NopCloser(bytes.NewReader(body))
+			}
+			fmt.Printf("received %v response, body %s\n", res.Status, body)	
 		}
-		fmt.Printf("Received %v response, body %s\n", res.Status, body)
+		// fmt.Printf("received %v response]s\n", res.Status)	
 	}
 
 	return
