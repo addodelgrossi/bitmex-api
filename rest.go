@@ -493,13 +493,14 @@ func (b *BitMEX) AmendOrder(oid string, price float64) (order swagger.Order, err
 	return
 }
 
-func (b *BitMEX) AmendOrder3(oid string, price float64, orderQty float32) (order swagger.Order, err error) {
+func (b *BitMEX) AmendOrder3(oid string, price float64, quantity float32) (order swagger.Order, err error) {
 	var response *http.Response
 
 	params := map[string]interface{}{}
 	params["orderID"] = oid
 	params["price"] = price
-	params["orderQty"] = orderQty
+	// params["orderQty"] = orderQty
+	params["leavesQty"] = quantity
 
 	order, response, err = b.client.OrderApi.OrderAmend(b.ctx, params)
 	if err != nil {
