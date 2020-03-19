@@ -139,8 +139,31 @@ func (b *BitMEX) GetOrderBook(depth int, symbol string) (ob OrderBook, err error
 	return
 }
 
-func (b *BitMEX) GetFunding(symbol string) (funding swagger.Funding, err error) {
-	funding, err = b.GetFunding(symbol)
+func (b *BitMEX) GetFundings(symbol string, count float32) (fundings []swagger.Funding, err error) {
+	var response *http.Response
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["reverse"] = true
+	params["count"] = count
+	fundings, response, err = b.client.FundingApi.FundingGet(params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
+func (b *BitMEX) GetLiquidations(symbol string, count float32) (liquidations []swagger.Liquidation, err error) {
+	var response *http.Response
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["reverse"] = true
+	params["count"] = count
+	liquidations, response, err = b.client.LiquidationApi.LiquidationGet(params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
 	return
 }
 
