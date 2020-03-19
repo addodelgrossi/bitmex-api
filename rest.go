@@ -167,6 +167,16 @@ func (b *BitMEX) GetLiquidations(symbol string, count float32) (liquidations []s
 	return
 }
 
+func (b *BitMEX) GetActiveInstruments(symbol string, count float32) (instruments []swagger.Instrument, err error) {
+	var response *http.Response
+	instruments, response, err = b.client.InstrumentApi.InstrumentGetActive()
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
 func (b *BitMEX) GetBucketed(symbol string, binSize string, partial bool, filter string, columns string, count float32, start float32, reverse bool, startTime time.Time, endTime time.Time) (o []swagger.TradeBin, err error) {
 	var response *http.Response
 
