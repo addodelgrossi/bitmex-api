@@ -178,6 +178,19 @@ func (b *BitMEX) GetActiveInstruments() (instruments []swagger.Instrument, err e
 	return
 }
 
+// GetInstruments getting by symbol
+func (b *BitMEX) GetInstruments(symbol string) (instruments []swagger.Instrument, err error) {
+	var response *http.Response
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	instruments, response, err = b.client.InstrumentApi.InstrumentGet(params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
 func (b *BitMEX) GetBucketed(symbol string, binSize string, partial bool, filter string, columns string, count float32, start float32, reverse bool, startTime time.Time, endTime time.Time) (o []swagger.TradeBin, err error) {
 	var response *http.Response
 
