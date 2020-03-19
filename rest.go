@@ -139,6 +139,11 @@ func (b *BitMEX) GetOrderBook(depth int, symbol string) (ob OrderBook, err error
 	return
 }
 
+func (b *BitMEX) GetFunding(symbol string) (funding swagger.Funding, err error) {
+	funding, err = b.GetFunding(symbol)
+	return
+}
+
 func (b *BitMEX) GetBucketed(symbol string, binSize string, partial bool, filter string, columns string, count float32, start float32, reverse bool, startTime time.Time, endTime time.Time) (o []swagger.TradeBin, err error) {
 	var response *http.Response
 
