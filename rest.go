@@ -178,7 +178,7 @@ func (b *BitMEX) GetActiveInstruments() (instruments []swagger.Instrument, err e
 	return
 }
 
-// GetInstruments getting by symbol
+// GetInstruments getting by symbol - deails
 func (b *BitMEX) GetInstruments(symbol string) (instruments []swagger.Instrument, err error) {
 	var response *http.Response
 	params := map[string]interface{}{}
