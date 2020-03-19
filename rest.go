@@ -167,6 +167,7 @@ func (b *BitMEX) GetLiquidations(symbol string, count float32) (liquidations []s
 	return
 }
 
+// GetActiveInstruments only active
 func (b *BitMEX) GetActiveInstruments() (instruments []swagger.Instrument, err error) {
 	var response *http.Response
 	instruments, response, err = b.client.InstrumentApi.InstrumentGetActive()
