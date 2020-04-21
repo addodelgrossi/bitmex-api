@@ -96,7 +96,7 @@ func (b *BitMEX) GetWalletHistory(currency string, start int, count int) (transa
 }
 
 // GetWalletSummary returning transactions
-func (b *BitMEX) GetWalletSummary(currency string, start int, count int) (transations []swagger.Transaction, err error) {
+func (b *BitMEX) GetWalletSummary(currency string) (transations []swagger.Transaction, err error) {
 	var response *http.Response
 
 	params := map[string]interface{}{}
