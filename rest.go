@@ -78,6 +78,38 @@ func (b *BitMEX) GetWallet() (wallet swagger.Wallet, err error) {
 	return
 }
 
+// GetWalletHistory returning transactions
+func (b *BitMEX) GetWalletHistory(currency string, start int, count int) (transations []swagger.Transaction, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["currency"] = currency
+	params["count"] = count
+	params["start"] = start
+
+	transations, response, err = b.client.UserApi.UserGetWalletHistory(b.ctx, params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
+// GetWalletSummary returning transactions
+func (b *BitMEX) GetWalletSummary(currency string, start int, count int) (transations []swagger.Transaction, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["currency"] = currency
+
+	transations, response, err = b.client.UserApi.UserGetWalletSummary(b.ctx, params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
 func (b *BitMEX) GetMargin() (margin swagger.Margin, err error) {
 	var response *http.Response
 
