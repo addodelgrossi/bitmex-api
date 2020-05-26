@@ -6,13 +6,14 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/url"
+	"time"
+
 	"github.com/addodelgrossi/bitmex-api/swagger"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 	"github.com/tidwall/gjson"
-	"log"
-	"net/url"
-	"time"
 )
 
 const (
@@ -94,7 +95,7 @@ func decodeMessage(message []byte) (Response, error) {
 				return res, err
 			}
 			res.Data = instruments
-		case BitmexWSOrderBookL2:
+		case BitmexWSOrderBookL2, BitmexWSOrderBookL2_25:
 			var orderbooks OrderBookData
 			err = json.Unmarshal([]byte(raw), &orderbooks)
 			if err != nil {
