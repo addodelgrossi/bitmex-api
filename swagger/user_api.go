@@ -12,10 +12,11 @@ package swagger
 
 import (
 	"encoding/json"
-	"golang.org/x/net/context"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"golang.org/x/net/context"
 )
 
 // Linger please
@@ -1161,6 +1162,12 @@ func (a *UserApiService) UserGetWalletHistory(ctx context.Context, localVarOptio
 
 	if localVarTempParam, localVarOk := localVarOptionals["currency"].(string); localVarOk {
 		localVarQueryParams.Add("currency", parameterToString(localVarTempParam, ""))
+	}
+	if localVarTempParam, localVarOk := localVarOptionals["count"].(int); localVarOk {
+		localVarQueryParams.Add("count", parameterToString(localVarTempParam, ""))
+	}
+	if localVarTempParam, localVarOk := localVarOptionals["start"].(int); localVarOk {
+		localVarQueryParams.Add("start", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}

@@ -95,7 +95,7 @@ func decodeMessage(message []byte) (Response, error) {
 				return res, err
 			}
 			res.Data = instruments
-		case BitmexWSOrderBookL2, BitmexWSOrderBookL2_25:
+		case BitmexWSOrderBookL2:
 			var orderbooks OrderBookData
 			err = json.Unmarshal([]byte(raw), &orderbooks)
 			if err != nil {
