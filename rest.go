@@ -341,6 +341,22 @@ func (b *BitMEX) GetOrders(symbol string) (orders []swagger.Order, err error) {
 	return
 }
 
+func (b *BitMEX) GetAllOrders(symbol string, start float32, count float32) (orders []swagger.Order, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["count"] = count
+	params["start"] = start
+
+	orders, response, err = b.client.OrderApi.OrderGetOrders(b.ctx, params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
 func (b *BitMEX) GetSideOrders(symbol string, side string, columns []string, count float32) (orders []swagger.Order, err error) {
 	var response *http.Response
 
