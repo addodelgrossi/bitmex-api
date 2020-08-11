@@ -376,6 +376,22 @@ func (b *BitMEX) GetSideOrders(symbol string, side string, columns []string, cou
 	return
 }
 
+func (b *BitMEX) GetTrades(symbol string, count float32, reverse bool) (orders []swagger.Trade, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["count"] = count
+	params["reverse"] = reverse
+
+	orders, response, err = b.client.TradeApi.TradeGet(params)
+	if err != nil {
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
 func (b *BitMEX) GetOrdersRaw(symbol string, filter string) (orders []swagger.Order, err error) {
 	var response *http.Response
 
