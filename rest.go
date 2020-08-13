@@ -457,6 +457,16 @@ func (b *BitMEX) NewOrderBulk(params map[string]interface{}) (orders []swagger.O
 	return orders, nil
 }
 
+func (b *BitMEX) NewOrderAmendBulk(params map[string]interface{}) (orders []swagger.Order, err error) {
+	var response *http.Response
+	orders, response, err = b.client.OrderApi.OrderAmendBulk(b.ctx, params)
+	if err != nil {
+		return orders, err
+	}
+	b.onResponse(response)
+	return orders, nil
+}
+
 // PlaceOrder 放置委托单
 // execInst: MarkPrice = 标记价格 IndexPrice = 指数价格 LastPrice = 最新成交 ParticipateDoNotInitiate = 被动委托
 func (b *BitMEX) PlaceOrder(side string, ordType string, stopPx float64, price float64, orderQty int32, timeInForce string, execInst string, symbol string) (order swagger.Order, err error) {
