@@ -447,6 +447,41 @@ func (b *BitMEX) NewOrder(side string, ordType string, price float64, orderQty f
 	return
 }
 
+func (b *BitMEX) NewOrder2(side string, ordType string, price float64, orderQty float32, postOnly bool, timeInForce string, symbol string, clOrdID string) (order swagger.Order, err error) {
+	var response *http.Response
+
+	params := map[string]interface{}{}
+	params["symbol"] = symbol
+	params["clOrdID"] = clOrdID // 客户端委托ID
+	params["side"] = side
+	params["ordType"] = ordType
+	// params["orderQty"] = float32(orderQty)
+	params["orderQty"] = orderQty
+	if price > 0.0 {
+		params["price"] = price // Limit order only
+	}
+	params["text"] = `open with bitmex api`
+
+	if timeInForce != "" { // "FillOrKill"	// 全数执行或立刻取消
+		params["timeInForce"] = timeInForce
+	}
+
+	if postOnly {
+		params["execInst"] = "ParticipateDoNotInitiate"
+	}
+
+	order, response, err = b.client.OrderApi.OrderNew(b.ctx, symbol, params)
+	if err != nil {
+		// >= 300 代表有错误
+		// 400 Bad Request
+		// 503
+		// log.Printf("response.StatusCode: %v", response.StatusCode)
+		return
+	}
+	b.onResponse(response)
+	return
+}
+
 func (b *BitMEX) NewOrderBulk(params map[string]interface{}) (orders []swagger.Order, err error) {
 	var response *http.Response
 	orders, response, err = b.client.OrderApi.OrderNewBulk(b.ctx, params)
